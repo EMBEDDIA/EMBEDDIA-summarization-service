@@ -1,0 +1,67 @@
+swagger: '2.0'
+info:
+  description: Comment summarization service
+  title: Dockerized API Skeleton
+  version: 1.0.0
+paths:
+  /health:
+    options:
+      description: "Describes the available HTTP methods for this end point."
+      responses:
+        '200':
+          description: OK
+    get:
+      description: "Returns the version number of the system as well. A reply indicates the system is healthy."
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            required:
+              - version
+            properties:
+              version:
+                type: string
+                example: "0.1.0"
+  /summarize:
+    options:
+      description: "Describes the available HTTP methods for this end point."
+      responses:
+        '200':
+          description: OK
+    post:
+      description: "Summarize the strings provided as input."
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: parameters
+          schema:
+            type: object
+            required:
+              - comments
+            properties:
+              comments:
+                type: array
+                items:
+                  type: string
+              count:
+                type: integer
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              summary:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Missing or invalid inputs
+        '500':
+          description: Error during summarization
